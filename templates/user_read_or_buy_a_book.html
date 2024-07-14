@@ -1,0 +1,25 @@
+<!-- Inheriting "user_dashboard.html" -->
+{% extends "user_dashboard.html" %}
+
+{% block title %}{{book.book_name}}{% endblock %}
+
+{% block content %}
+
+<!-- Read or Buy a particular book -->
+<div class="card" style="width: 85rem; margin-left: -25%;">
+    <div class="card-body">
+      <h5 class="card-title">{{book.book_name}}</h5>
+      <p class="card-text">Section Name: {{book.section.section_name}}</p>
+      <p class="card-text">Author(s): {{book.authors}}</p>
+      <p class="card-text">Price(₹): {{book.book_price}}</p>
+      {% if already_bought %}
+        <a href="/download_book/{{username}}/{{book.book_id}}"><button type="button" class="btn btn-success">Download</button></a>
+      {% else %}
+        <a href="/payment_page/{{username}}/{{book.book_id}}/{{book.book_price}}" class="card-link"><button type="button" class="btn btn-primary">Buy</button></a><br><br>
+      {% endif %}
+      <br><br>
+      <p class="card-text"><textarea name="" id="" cols="177" rows="50">{{book.content}}</textarea></p>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,50 @@
+<!-- Inheriting "librarian_dashboard.html" -->
+{% extends "librarian_dashboard.html" %}
+
+{% block title %}{{section_id}} Books{% endblock %}
+
+{% block content %}
+<table class="table table-striped custom-table" style="width: 150%; margin-left: -25%;">
+    {% if this_section_all_books %}
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Book Id</th>
+        <th scope="col">Book Name</th>
+        <th scope="col">Author(s)</th>
+        <th scope="col">Section Name</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Total Copies</th>
+        <th scope="col">Available Copies</th>
+        <th scope="col">Issued Copies</th>
+        <th scope="col">Sold Copies</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Update</th>
+        <th scope="col">View</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for book in this_section_all_books %}
+      <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ book.book_id }}</td>
+        <td>{{ book.book_name }}</td>
+        <td>{{ book.authors }}</td>
+        <td>{{ book.section.section_name }}</td>
+        <td>{{ book.date_created.strftime("%d") }}-{{ book.date_created.strftime("%b") }}-{{ book.date_created.strftime("%Y") }}</td>
+        <td>{{ book.total_copies }}</td>
+        <td>{{ book.available_copies }}</td>
+        <td>{{ book.issued_copies }}</td>
+        <td>{{ book.sold_copies }}</td>
+        <td><a href="/delete_book/{{book.book_id}}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+        <td><a href="/update_book/{{book.book_id}}"><button type="button" class="btn btn-warning">Update</button></a></td>
+        <td><a href="/book_view/{{book.book_id}}"><button type="button" class="btn btn-primary">View/Read</button></a></td>
+      </tr>
+    {% endfor %}
+    {% else %}
+    <p>No books availble in this section.</p>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock content %}

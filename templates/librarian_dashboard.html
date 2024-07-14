@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Librarian Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="/static/librarian_dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="nav-link active" aria-current="page" href="/librarian_dashboard">Librarian's dashboard</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/all_books"><button type="button" class="btn btn-info">All Books</button></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/all_sections"><button type="button" class="btn btn-info">All Sections</button></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/librarian_stats"><button type="button" class="btn btn-info">Stats</button></a>
+              </li>
+            </ul>
+            <a class="nav-link active" aria-current="page" href="/" style="margin-right: 15px;">Home</a>
+            <form action="/librarian_dashboard" method="post">
+              <button class="btn btn-outline-success" type="submit" name="logout" value="logout">Logout</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      
+      <div>
+        <form action="/librarian_dashboard" method="post" id="search-bar-form" class="d-flex" role="search">
+          <button id="add-section" name="add-section" value="add-section" type="submit" class="btn btn-primary">Add Section</button>
+          <button id="add-book" name="add-book" value="add-book" type="submit" class="btn btn-primary">Add Book</button>
+          <input for="search" id="search-bar-area" name="search-bar-area" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button id="search" name="search" class="btn btn-outline-success" value="search" type="submit">Search</button>
+        </form>
+      </div>
+      <br>
+
+
+      <!-- Recent 5 Sections in Librarian dashboard -->
+      <div>
+        {% if recent_sections %}
+        <h3>Recently added Sections</h3>
+        {% for section in recent_sections %}
+        <div class="the-cards">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{ section.section_name }}</h5>
+              <p class="card-text">Section Id: {{ section.section_id }}</p>
+              <p class="card-text">Date Created: {{ section.date_created.strftime("%d") }}-{{ section.date_created.strftime("%b") }}-{{ section.date_created.strftime("%Y") }}</p>
+              <p class="card-text">Description: {{ section.description }}</p>
+              <a href="/section_view/{{section.section_id}}" class="card-link"><button type="button" class="btn btn-primary">View Section</button></a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+      </div>
+      <br>
+
+      <!-- Recent 5 Books in Librarian dashboard -->      
+      <div>
+        {% if recent_books %}
+        <h3>Recently added Books</h3>
+        {% for book in recent_books %}
+        <div class="the-cards">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{ book.book_name }}</h5>
+              <p class="card-text">Book Id: {{ book.book_id }}</p>
+              <p class="card-text">Section id: {{ book.section_id }}</p>
+              <p class="card-text">Date Created: {{ book.date_created.strftime("%d") }}-{{ book.date_created.strftime("%b") }}-{{ book.date_created.strftime("%Y") }}</p>
+              <p class="card-text">Authors(s): {{ book.authors }}</p>
+              <p class="card-text">Total Copies: {{ book.total_copies }}</p>
+              <p class="card-text">Avaialable Copies: {{ book.available_copies }}</p>
+              <p class="card-text">Issued Copies: {{ book.issued_copies }}</p>
+              <p class="card-text">Sold Copies: {{ book.sold_copies }}</p>
+              <p class="card-text">Price: ₹ {{ book.book_price }}</p>
+              <a href="/book_view/{{book.book_id}}" class="card-link"><button type="button" class="btn btn-primary">View/Read Book</button></a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+      </div><br>
+
+      <!-- Requested Books Table -->
+      {% if requested_books %}
+      <div>
+        <h3>Requested Books</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">User Id</th>
+              <th scope="col">Book Id</th>
+              <th scope="col">Book Name</th>
+              <th scope="col">Section Name</th>
+              <th scope="col">Date of Request</th>
+              <th scope="col">Issue/Grant</th>
+              <th scope="col">Revoke/Cancel</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for book in requested_books %}
+            <tr>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ book.user_id }}</td>
+              <td>{{ book.book_id }}</td>
+              <td>{{ book.books.book_name }}</td>
+              <td>{{ book.books.section.section_name }}</td>
+              <td>{{ book.date_requested.strftime("%d") }}-{{ book.date_requested.strftime("%b") }}-{{ book.date_requested.strftime("%Y") }}</td>
+              <td><form action="/librarian_dashboard" method="post">
+                    <button type="submit" id="grant-request" name="grant-request" value="{{ book.user_id }}*{{ book.book_id }}" class="btn btn-success">Issue/Grant</button>
+                  </form>
+              </td>
+              <td>
+                <form action="/librarian_dashboard" method="post">
+                  <button type="submit" id="cancel-request" name="cancel-request" value="{{ book.user_id }}*{{ book.book_id }}" class="btn btn-danger">Revoke/Cancel</button>
+                </form>
+              </td>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+      </div>
+      {% endif %}
+
+      <!-- Currently Issued Books Table -->
+      {% if currently_issued_book %}
+      <div>
+        <h3>Currently Issued Books</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">User Id</th>
+              <th scope="col">Book Id</th>
+              <th scope="col">Book Name</th>
+              <th scope="col">Author(s)</th>
+              <th scope="col">Section Name</th>
+              <th scope="col">Date of Request</th>
+              <th scope="col">Date of Issue</th>
+              <th scope="col">Days Remaining</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for book in currently_issued_book %}
+            <tr>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ book.user_id }}</td>
+              <td>{{ book.book_id }}</td>
+              <td>{{ book.books.book_name }}</td>
+              <td>{{ book.books.authors }}</td>
+              <td>{{ book.books.section.section_name }}</td>
+              <td>{{ book.date_requested.strftime("%d") }}-{{ book.date_requested.strftime("%b") }}-{{ book.date_requested.strftime("%Y") }}</td>
+              <td>{{ book.date_issued.strftime("%d") }}-{{ book.date_issued.strftime("%b") }}-{{ book.date_issued.strftime("%Y") }}</td>
+              <td>{{ seven_days - (time_now - book.date_issued) }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+      </div>
+      {% endif %}
+
+      <!-- Sold Books Table -->
+      {% if sold_books %}
+      <div>
+        <h3>Sold Books</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">User Id</th>
+              <th scope="col">Book Id</th>
+              <th scope="col">Book Name</th>
+              <th scope="col">Author(s)</th>
+              <th scope="col">Section Name</th>
+              <th scope="col">Book Price</th>
+              <th scope="col">Date of Selling</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for book in sold_books %}
+            <tr>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ book.user_id }}</td>
+              <td>{{ book.book_id }}</td>
+              <td>{{ book.books.book_name }}</td>
+              <td>{{ book.books.authors }}</td>
+              <td>{{ book.books.section.section_name }}</td>
+              <td>₹ {{ book.books.book_price }}</td>
+              <td>{{ book.date_sold.strftime("%d") }}-{{ book.date_sold.strftime("%b") }}-{{ book.date_sold.strftime("%Y") }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+      </div>
+      {% endif %}
+
+      <div id="content">
+        {% block content %}{% endblock %}
+      </div>
+</body>
+</html>

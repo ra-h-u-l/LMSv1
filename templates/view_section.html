@@ -1,0 +1,18 @@
+<!-- Inheriting "librarian_dashboard.html" -->
+{% extends "librarian_dashboard.html" %}
+
+{% block title %}Section : {{this_section.section_name}}{% endblock %}
+
+{% block content %}
+<h4>Section Details</h4>
+    <div class="card" style="width: 60rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{this_section.section_name}}</h5>
+          <p class="card-text">Section Id: {{this_section.section_id}}</p>
+          <p class="card-text">Date Craeted: {{this_section.date_created.strftime("%d")}}-{{this_section.date_created.strftime("%b")}}-{{this_section.date_created.strftime("%Y")}} {{this_section.date_created.strftime("%X")}}</p>
+          <p class="card-text">Description: {{this_section.description}}</p>
+          <a href="/all_books_of/{{this_section.section_id}}" class="card-link"><button type="submit" class="btn btn-primary">All Books of {{this_section.section_name}}</button></a>
+          <a href="/update_section/{{this_section.section_id}}" class="card-link"><button type="submit" class="btn btn-warning">Update This Section</button></a>
+        </div>
+      </div>
+{% endblock content %}

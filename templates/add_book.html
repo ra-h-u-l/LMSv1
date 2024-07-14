@@ -1,0 +1,46 @@
+<!-- Inheriting "librarian_dashboard.html" -->
+{% extends "librarian_dashboard.html" %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block content %}
+<h4>Please Enter Book Details</h4>
+<form action="/add_book" method="post">
+    <div class="mb-3">
+        <label for="book-id" class="form-label">Book Id</label>
+        <input type="text" class="form-control" id="book-id" name="book-id" required>
+    </div>
+    <div class="mb-3">
+        <label for="book-name" class="form-label">Book Name</label>
+        <input type="text" class="form-control" id="book-name" name="book-name" required>
+    </div>
+    <!-- Section Id - to choose from dropdown options -->
+    <div class="mb-3">
+        <label for="section-id" class="form-label">Section Id</label>
+        <select class="form-select" name="section-id" id="section-id" required>
+            {% for sl in section_list %}
+            <option value="{{sl.section_id}}">{{sl.section_id}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <p><label for="book-content">Book Content</label></p>
+        <textarea type="text" name="book-content" id="book-content" class="form-control" cols="50" rows="10" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="book-authors" class="form-label">Author(s)</label>
+        <input type="text" class="form-control" id="book-authors" name="book-authors" required>
+    </div>
+    <div class="mb-3">
+        <label for="book-total-copies" class="form-label">Total Copies</label>
+        <input type="number" min="1" class="form-control" id="book-total-copies" name="book-total-copies" required>
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Price(₹)</label>
+        <input type="number" min="0" class="form-control" id="price" name="price" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+    <br><br><br>
+</form>
+{% endblock content %}

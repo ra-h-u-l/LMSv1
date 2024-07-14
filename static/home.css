@@ -1,0 +1,54 @@
+/* ------------------------------------> Home Page <---------------------------------------- */
+#home-body {
+    background-image: url(https://cdn.pixabay.com/photo/2017/08/06/22/01/books-2596809_960_720.jpg);
+}
+
+#home-heading {
+    text-align: center;
+    font-size: 50px;
+    color: yellow;
+}
+
+#home-user-box{
+    display: inline;
+    float: left;
+    background-color: #FDF7E4;
+    height: 150px;
+    width: 150px;
+    border: 2px solid red;
+    border-radius: 10%;
+    margin-left: 40%;
+    margin-top: 10%;
+    padding: 5px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+#user-register-button{
+    background-color: #BBAB8C;
+}
+
+#user-login-button{
+    background-color: #BBAB8C;
+}
+
+#home-librarian-box {
+    display: inline;
+    float: left;
+    background-color: #FDF7E4;
+    height: 150px;
+    width: 150px;
+    border: 2px solid red;
+    border-radius: 10%;
+    margin-left: 5%;
+    margin-top: 10%;
+    padding: 5px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+#librarian-login-button{
+    background-color: #BBAB8C;
+}

@@ -1,0 +1,33 @@
+<!-- Inheriting "user_dashboard.html" -->
+{% extends "user_dashboard.html" %}
+
+{% block title %}All Sections{% endblock %}
+
+{% block content %}
+
+<!-- Table of all books available in database -->
+{% if sections %}
+<table class="table table-striped custom-table" style="width: 100%;">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Section Id</th>
+        <th scope="col">Section Name</th>
+        <th scope="col">Section's Books</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for section in sections %}
+      <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ section.section_id }}</td>
+        <td>{{ section.section_name }}</td>
+        <td><a href="/user_dashboard/{{username}}/{{section.section_id}}"><button type="button" class="btn btn-primary">View This Section's Books</button>
+        </a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock content %}

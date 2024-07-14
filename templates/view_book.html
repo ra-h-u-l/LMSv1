@@ -1,0 +1,28 @@
+<!-- Inheriting "librarian_dashboard.html" -->
+{% extends "librarian_dashboard.html" %}
+
+{% block title %}Book : {{this_book.book_id}}{% endblock %}
+
+{% block content %}
+<h4>Book Details</h4>
+    <div class="card" style="width: 60rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{this_book.book_name}}</h5>
+          <p class="card-text">Book Id: {{this_book.book_id}}</p>
+          <p class="card-text">Date Craeted: {{this_book.date_created.strftime("%d")}}-{{this_book.date_created.strftime("%b")}}-{{this_book.date_created.strftime("%Y")}} {{this_book.date_created.strftime("%X")}}</p>
+          <p class="card-text">Section Id: {{this_book.section_id}}</p>
+          <p class="card-text">Authors: {{this_book.authors}}</p>
+          <p class="card-text">Total Copies: {{this_book.total_copies}}</p>
+          <p class="card-text">Available Copies: {{this_book.available_copies}}</p>
+          <p class="card-text">Issued Copies: {{this_book.issued_copies}}</p>
+          <p class="card-text">Sold Copies: {{this_book.sold_copies}}</p>
+          <p class="card-text">Price(₹): {{this_book.book_price}}</p>
+          <a href="/update_book/{{this_book.book_id}}" class="card-link"><button type="submit" class="btn btn-warning">Update This Book</button></a>
+          <a href="/delete_book/{{this_book.book_id}}" class="card-link"><button type="submit" class="btn btn-danger">Delete This Book</button></a>
+          <br><br>
+          <p class="card-text">Book Content</p>
+          <p class="card-text"><textarea name="" id="" cols="122" rows="30">{{this_book.content}}</textarea></p>
+
+        </div>
+      </div>
+{% endblock content %}

@@ -1,0 +1,37 @@
+<!-- Inheriting "librarian_dashboard.html" -->
+{% extends "librarian_dashboard.html" %}
+
+{% block title %}All Sections{% endblock %}
+
+{% block content %}
+<!-- Table of all sections available in database -->
+{% if all_sec %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Section Id</th>
+        <th scope="col">Section Name</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Update</th>
+        <th scope="col">View</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for section in all_sec %}
+      <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ section.section_id }}</td>
+        <td>{{ section.section_name }}</td>
+        <td>{{ section.date_created.strftime("%d") }}-{{ section.date_created.strftime("%b") }}-{{ section.date_created.strftime("%Y") }}</td>
+        <td><a href="/delete_section/{{section.section_id}}"><button type="submit" class="btn btn-danger">Delete</button></a></td>
+        <td><form action="/update_section/{{section.section_id}}" method="post"><button type="submit" class="btn btn-warning">Update</button></form></td>
+        <td><form action="/section_view/{{section.section_id}}" method="post"><button type="submit" class="btn btn-primary">View</button></form></td>
+
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock content %}

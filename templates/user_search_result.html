@@ -1,0 +1,46 @@
+<!-- Inheriting "user_dashboard.html" -->
+{% extends "user_dashboard.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+
+<!-- Table of all books available in database -->
+{% if result_list %}
+<table class="table table-striped custom-table" style="width: 150%; margin-left: -25%;">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Book Id</th>
+        <th scope="col">Book Name</th>
+        <th scope="col">Author(s)</th>
+        <th scope="col">Section Name</th>
+        <th scope="col">Request</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for book in result_list %}
+      <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ book[0] }}</td>
+        <td>{{ book[1] }}</td>
+        <td>{{ book[3] }}</td>
+        <td><a href="/user_dashboard/{{username}}/{{book[5]}}"><button type="button" class="btn btn-primary">{{ book[2] }}</button></a></td>
+        {% if book[4] > 0 %}
+        <td>
+          <form action="/user_dashboard/{{username}}/borrow" method="post">
+            <button type="submit" id="book_id" name="book_id" value="{{book[0]}}" class="btn btn-primary">
+              Request to Borrow This Book
+            </button>
+          </form>
+        </td>
+        {% else %}
+        <td>Currently Unavailable</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock content %}

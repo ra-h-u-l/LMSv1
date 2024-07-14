@@ -1,0 +1,20 @@
+*{
+    margin: 0px;
+    background-color: #FAEED1;
+}
+
+
+#login-box {
+    width: 80%;
+    height: 550px;
+    margin: auto;
+}
+
+#login-body {
+    border-radius: 4%;
+    height: 420px;
+    width: 430px;
+    margin: auto;
+    margin-top: 60px;
+    padding: 6px;
+}

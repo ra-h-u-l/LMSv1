@@ -1,0 +1,22 @@
+/* ---------> Search bar <---------- */
+#search-bar-area{
+    margin-left: 65%;
+    width: 200px;
+    border: 2px solid black;
+    display: inline-block;
+}
+
+#add-section, #add-book, #requested-books{
+    margin: 1px;
+}
+
+#content{
+    margin-top: 3%;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.the-cards{
+    display: inline-block;
+}
+
